@@ -1,1 +1,115 @@
+-- 3. Code demonstrating fetchAll() using print_r() with <pre> tags:
 
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Prepare and execute the query
+$stmt = $pdo->query("SELECT * FROM Customers");
+
+// Fetch all records
+$customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Use print_r() to display results in a readable format
+echo '<pre>';
+print_r($customers);
+echo '</pre>';
+?>
+
+-- 4. Code demonstrating fetch() using print_r() with <pre> tags:
+
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Prepare and execute the query
+$stmt = $pdo->query("SELECT * FROM Customers");
+
+// Fetch one record at a time
+while ($customer = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<pre>';
+    print_r($customer);
+    echo '</pre>';
+}
+?>
+
+-- 5. Code demonstrating insertion of a record into your database:
+
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Insert a new record into the Customers table
+$sql = "INSERT INTO Customers (customer_id, name, email, phone) VALUES (6, 'Joe Kido', 'joe.kido@example.com', '555-2468')";
+$pdo->exec($sql);
+
+echo "Record inserted successfully!";
+?>
+
+-- 6. Code demonstrating deletion of a record from your database:
+
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Delete a record from the Customers table
+$sql = "DELETE FROM Customers WHERE customer_id = 6";
+$pdo->exec($sql);
+
+echo "Record deleted successfully!";
+?>
+
+-- 7. Code demonstrating updating of a record in your database:
+
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Update a record in the Customers table
+$sql = "UPDATE Customers SET phone = '555-9876' WHERE customer_id = 5";
+$pdo->exec($sql);
+
+echo "Record updated successfully!";
+?>
+
+-- 8. Code demonstrating rendering an SQL query’s result set on an HTML table:
+
+<?php
+// Database connection
+$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+
+// Prepare and execute the query
+$stmt = $pdo->query("SELECT * FROM Customers");
+
+// Fetch all records
+$customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer List</title>
+</head>
+<body>
+
+<h2>Customer List</h2>
+
+<table border="1">
+    <tr>
+        <th>Customer ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    <?php foreach ($customers as $customer): ?>
+        <tr>
+            <td><?php echo $customer['customer_id']; ?></td>
+            <td><?php echo $customer['name']; ?></td>
+            <td><?php echo $customer['email']; ?></td>
+            <td><?php echo $customer['phone']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+</body>
+</html>
